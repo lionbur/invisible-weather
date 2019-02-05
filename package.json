@@ -13,6 +13,7 @@
     "eslint": "^5.13.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.16.0",
+    "expect": "^24.0.0",
     "mocha": "^5.2.0",
     "nodemon": "^1.18.9",
     "ts-node": "^8.0.2",
@@ -27,7 +28,11 @@
     "lint": "eslint src --ext ts",
     "prebuild": "yarn lint",
     "build": "tsc",
-    "test": "mocha -r ts-node/register src",
+    "test": "mocha -r ts-node/register src/*.spec.ts",
     "start": "nodemon -r ts-node/register --watch src"
+  },
+  "dependencies": {
+    "lodash": "^4.17.11",
+    "weather-js": "^2.0.0"
   }
 }
