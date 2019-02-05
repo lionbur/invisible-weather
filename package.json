@@ -1,0 +1,33 @@
+{
+  "name": "invisible-weather",
+  "version": "1.0.0",
+  "description": "Task from Invisible",
+  "main": "src/index.ts",
+  "repository": "https://github.com/lionbur/invisible-weather",
+  "author": "Lion Burger",
+  "license": "UNLICENSED",
+  "private": true,
+  "devDependencies": {
+    "@types/mocha": "^5.2.5",
+    "@types/node": "^10.12.21",
+    "eslint": "^5.13.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.16.0",
+    "mocha": "^5.2.0",
+    "nodemon": "^1.18.9",
+    "ts-node": "^8.0.2",
+    "typescript": "3.2.1",
+    "typescript-eslint-parser": "^22.0.0",
+    "yarn": "^1.13.0"
+  },
+  "scripts": {
+    "yarn": "yarn",
+    "tsc": "tsc",
+    "nodemon": "nodemon",
+    "lint": "eslint src --ext ts",
+    "prebuild": "yarn lint",
+    "build": "tsc",
+    "test": "mocha -r ts-node/register src",
+    "start": "nodemon -r ts-node/register --watch src"
+  }
+}

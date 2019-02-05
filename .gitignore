@@ -1,0 +1,5 @@
+*.log
+/dist/
+/.vscode/
+/node_modules/
+yarn.lock
