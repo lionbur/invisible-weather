@@ -1,17 +1,17 @@
 import { createInterface } from 'readline'
 
-type Answers = [string?]
-type AnswersResolve = (_: Answers) => void
+export type Queries = string[]
+type QueriesResolve = (_: Queries) => void
 type Reject = (error: Error) => void
 
-export default (): Promise<Answers> => new Promise((resolve: AnswersResolve, reject: Reject): void => {
+export default (): Promise<Queries> => new Promise((resolve: QueriesResolve, reject: Reject): void => {
   const io = createInterface({
     input: process.stdin,
     output: process.stdout,
     prompt: 'Location name or postal code (empty value to end): ',
     terminal: false,
   })
-  const answers: Answers = []
+  const answers: Queries = []
 
   io
     .on('line', (answer: string): void => {
