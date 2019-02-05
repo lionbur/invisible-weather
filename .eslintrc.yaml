@@ -1,14 +1,23 @@
 ---
   extends: airbnb-base
   rules:
-    semi: 0
+    semi: [0, always]
     no-console: 0
+    import/prefer-default-export: 0
+    import/extensions: 0
+    no-template-curly-in-string: 0
+    no-void: 0
+    no-unused-vars: 0
   env:
     node: true
     mocha: true
     es6: true
   parser: typescript-eslint-parser
+  plugins: [import]
   parserOptions:
     sourceType: module
     ecmaFeatures: 
       modules: true
+  settings:
+    import/resolver:
+      typescript: [src]

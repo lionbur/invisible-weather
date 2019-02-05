@@ -1,4 +1,5 @@
 import { flatten } from 'lodash/fp'
+
 const weather = require('weather-js')
 
 export type WeatherResult = {
@@ -42,40 +43,41 @@ class WeatherError extends Error {
 
 const findWeather = (search: string, degreeType: string): Promise<WeatherResult[]> => new Promise(
   (resolve: ResolveWeather, reject: RejectWeather) => {
-    void weather.find({search, degreeType}, (err: string, results?: WeatherJsResult[]) => {
+    void weather.find({ search, degreeType }, (err: string, results?: WeatherJsResult[]) => {
       if (err) {
         return void reject(new WeatherError(err, search))
       }
 
-      void resolve(results
-        .map(({location, current}: WeatherJsResult) => ({
+      return void resolve(results
+        .map(({ location, current }: WeatherJsResult) => ({
           name: location.name,
           latitude: parseFloat(location.lat),
           longitude: parseFloat(location.long),
-          timezone: parseInt(location.timezone),
+          timezone: parseInt(location.timezone, 10),
           weather: current.skytext,
-          temperature: parseInt(current.temperature),
-          feelsLike: parseInt(current.feelslike),
-          humidity: parseInt(current.humidity),
+          temperature: parseInt(current.temperature, 10),
+          feelsLike: parseInt(current.feelslike, 10),
+          humidity: parseInt(current.humidity, 10),
           windDisplay: current.winddisplay,
         })))
-  })
-})
+    })
+  },
+)
 
 type GetWeatherReportsArgs = {
   queries: string[],
   degreeType: string,
 }
 
-export default async ({queries, degreeType}: GetWeatherReportsArgs): Promise<any> => {
+export default async ({ queries, degreeType }: GetWeatherReportsArgs): Promise<any> => {
   try {
     const reports = await Promise.all(
       queries
-        .map(query => findWeather(query, degreeType))
-    ) 
+        .map(query => findWeather(query, degreeType)),
+    )
 
     return flatten(reports)
-  } catch (e/*:WeatherError*/) {
+  } catch (e) {
     const error: WeatherError = e as WeatherError
 
     console.error(`Error while searching for ${error.search}: ${error.message}`)
